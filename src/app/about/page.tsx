@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft, Sparkles } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 
+import { Logo } from "@/components/brand/logo";
 import { Button } from "@/components/ui/button";
 
 // Page-level metadata overrides the root layout's <title> for this route only.
@@ -19,12 +20,9 @@ export default function AboutPage() {
         </Link>
       </Button>
 
-      <div className="flex items-center gap-2 text-muted-foreground">
-        <Sparkles className="size-5" aria-hidden />
-        <span className="text-sm font-medium">PreferenceAI</span>
-      </div>
+      <Logo />
 
-      <h1 className="text-3xl font-semibold tracking-tight">
+      <h1 className="text-headline-lg-mobile md:text-headline-lg">
         About PreferenceAI
       </h1>
 
