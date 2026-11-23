@@ -3,9 +3,15 @@
 // Phase 1 placeholder: it only proves Tailwind + shadcn + Lucide work together.
 // The real dashboard replaces this in Phase 2.
 
-import { CircleQuestionMark, Sparkles, ThumbsDown, ThumbsUp } from "lucide-react";
+import {
+  CircleQuestionMark,
+  Sparkles,
+  ThumbsDown,
+  ThumbsUp,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -36,6 +42,12 @@ export default function Home() {
           <CircleQuestionMark /> Not sure
         </Button>
       </div>
+
+      {/* asChild: Button renders NO <button>; it merges its styles onto
+          its single child, so the output is ONE element: <a href="/about"> */}
+      <Button asChild variant="link" size="sm">
+        <Link href="/about">Learn more about PreferenceAI</Link>
+      </Button>
 
       <p className="text-xs text-muted-foreground">
         Phase 1 setup complete — the dashboard arrives in Phase 2.

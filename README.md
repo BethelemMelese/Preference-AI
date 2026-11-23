@@ -2,7 +2,7 @@
 
 An AI-powered personal preference discovery app. Users explore categories, mark items as **Like**, **Dislike**, or **Not sure**, and receive AI-generated suggestions, analyses, and reports. Those AI outputs are always built from, and kept separate from, the choices the user actually made.
 
-> **Status:** Phase 1 (project setup) complete. See [docs/DEVELOPMENT_PROGRESS.md](docs/DEVELOPMENT_PROGRESS.md).
+> **Status:** Phase 1 (project setup) complete.
 
 ## Tech stack
 
@@ -42,11 +42,4 @@ npm run dev                       # http://localhost:3000
 
 ## Documentation
 
-| Document | Contents |
-|---|---|
-| [ARCHITECTURE.md](docs/ARCHITECTURE.md) | System design, layers, request flow, key decisions |
-| [DATABASE.md](docs/DATABASE.md) | Models, relationships, constraints |
-| [OPENAI_INTEGRATION.md](docs/OPENAI_INTEGRATION.md) | How the OpenAI integration works, step by step |
-| [API_DOCUMENTATION.md](docs/API_DOCUMENTATION.md) | Every endpoint: request, response, errors |
-| [LEARNING_NOTES.md](docs/LEARNING_NOTES.md) | Technical learning journal |
-| [DEVELOPMENT_PROGRESS.md](docs/DEVELOPMENT_PROGRESS.md) | Completed and remaining work |
+Detailed technical documentation (architecture, database, OpenAI integration, API, learning notes, progress) is maintained privately in a local, git-ignored `docs/` folder.
