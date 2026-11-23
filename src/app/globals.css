@@ -6,18 +6,20 @@
      2. @theme inline    exposes variables as Tailwind utilities (bg-primary…)
      3. @theme           static scales: type, radius, shadows
 
-   Rule: DESIGN.md frontmatter tokens are the source of truth for any colour
-   used as TEXT (they pass WCAG AA). Prose colours that fail contrast
-   (#9261c0, #beac49, #846f96, #7b757d) are used only for tints, borders,
-   fills, and shadows, where text-contrast rules don't apply.
+   Rule: every colour used as TEXT passes WCAG AA (4.5:1). Colours that
+   fail as text (#9261c0, #846f96, logo green #20a779) are used only for
+   tints, borders, fills, and shadows.
+
+   Designer decisions: canvas #fff7fe · secondary text #736d75 · Like is
+   the logo green · dark mode designed in code (not in DESIGN.md).
    ========================================================================== */
 
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-/* Dark mode is not defined in DESIGN.md yet; the variant is kept so shadcn
-   components compile, but no .dark theme exists, so it never activates. */
+/* Dark mode = a .dark class on <html> (set before paint by the script in
+   layout.tsx, toggled by ThemeToggle). `dark:` utilities match inside it. */
 @custom-variant dark (&:is(.dark *));
 
 /* --------------------------------------------------------------------------
@@ -51,7 +53,7 @@
   --secondary: #ead1fd;                               /* secondary-container */
   --secondary-foreground: #6b577d;                    /* 4.58:1 */
   --muted: var(--surface-container);
-  --muted-foreground: var(--on-surface-variant);      /* 8.92:1 */
+  --muted-foreground: #736d75;                        /* 4.79:1 canvas, 5.03 card */
   --accent: rgb(146 97 192 / 0.06);                   /* ghost hover tint */
   --accent-foreground: var(--on-surface);
   --destructive: #ba1a1a;
@@ -62,10 +64,10 @@
   /* --- Preference states (DESIGN.md "Semantic Triage") ---
      *-foreground = text/icons (AA-safe), *-surface = chip background,
      *-border = chip border, *-accent = fills (progress bars, dots). */
-  --like-foreground: #6c5e00;                         /* tertiary, 5.93:1 */
-  --like-surface: rgb(190 172 73 / 0.12);
-  --like-border: rgb(190 172 73 / 0.25);
-  --like-accent: #beac49;
+  --like-foreground: #0e6b48;                         /* 5.75:1 on tint */
+  --like-surface: rgb(32 167 121 / 0.12);
+  --like-border: rgb(32 167 121 / 0.3);
+  --like-accent: #20a779;                             /* logo green, fills */
 
   --dislike-foreground: #ba1a1a;                      /* 5.28:1 */
   --dislike-surface: rgb(186 26 26 / 0.12);
@@ -77,9 +79,20 @@
   --unsure-border: rgb(132 111 150 / 0.25);
   --unsure-accent: #846f96;
 
+  /* Category "completed" state (crimson in the Categories design) */
+  --complete-foreground: #8c1d40;                     /* 7.51:1 on tint */
+  --complete-surface: rgb(186 26 74 / 0.1);
+  --complete-border: rgb(186 26 74 / 0.25);
+  --complete-accent: #8c1d40;
+
+  /* Soft purple: active nav item, tag chips, "Resume" buttons */
+  --primary-soft: #f0dbff;                            /* primary-fixed */
+  --primary-soft-foreground: #5e2e8b;                 /* 7.3:1 */
+  --progress-track: #f0dbff;
+
   /* --- Charts (used in reports later) --- */
   --chart-1: #7545a2;
-  --chart-2: #beac49;
+  --chart-2: #20a779;
   --chart-3: #846f96;
   --chart-4: #deb7ff;
   --chart-5: #ba1a1a;
@@ -95,6 +108,79 @@
   --sidebar-ring: var(--primary-container);
 
   --radius: 0.5rem;
+}
+
+/* Dark theme: derived from the brand palette (inverse tokens in DESIGN.md).
+   Every text pair verified ≥ 4.5:1. Only VALUES change; utility names stay
+   the same, so components need no dark: variants for colours. */
+.dark {
+  color-scheme: dark; /* native scrollbars, form controls */
+
+  --surface: #151218;
+  --surface-container-lowest: #100d13;
+  --surface-container-low: #1e1a21;
+  --surface-container: #221e25;
+  --surface-container-high: #2c2830;
+  --surface-container-highest: #37323b;
+  --on-surface: #e8e0e9;
+  --on-surface-variant: #b0a6b4;
+  --outline: #978e9b;
+  --outline-variant: #4b4450;
+
+  --background: var(--surface);
+  --foreground: var(--on-surface);                    /* 14.38:1 */
+  --card: var(--surface-container-low);
+  --card-foreground: var(--on-surface);
+  --popover: var(--surface-container);
+  --popover-foreground: var(--on-surface);
+  --primary: #deb7ff;                                 /* inverse-primary */
+  --primary-foreground: #45166f;                      /* 7.71:1 */
+  --secondary: #3b3145;
+  --secondary-foreground: #ead1fd;                    /* 8.79:1 */
+  --muted: var(--surface-container-high);
+  --muted-foreground: var(--on-surface-variant);      /* 7.31:1 */
+  --accent: rgb(222 183 255 / 0.08);
+  --accent-foreground: var(--on-surface);
+  --destructive: #ffb4ab;
+  --border: rgb(255 255 255 / 0.1);
+  --input: rgb(255 255 255 / 0.15);
+  --ring: #b98ae6;
+
+  --like-foreground: #5fd3a3;                         /* 7.38:1 */
+  --like-surface: rgb(32 167 121 / 0.16);
+  --like-border: rgb(32 167 121 / 0.35);
+  --like-accent: #3cc28f;
+  --dislike-foreground: #ffb4ab;                      /* 8.24:1 */
+  --dislike-surface: rgb(255 84 73 / 0.16);
+  --dislike-border: rgb(255 84 73 / 0.35);
+  --dislike-accent: #ff8a80;
+  --unsure-foreground: #d6bde9;                       /* 7.79:1 */
+  --unsure-surface: rgb(165 143 184 / 0.16);
+  --unsure-border: rgb(165 143 184 / 0.35);
+  --unsure-accent: #a58fb8;
+  --complete-foreground: #ffb1c5;                     /* 8.01:1 */
+  --complete-surface: rgb(255 92 138 / 0.16);
+  --complete-border: rgb(255 92 138 / 0.35);
+  --complete-accent: #ff7aa2;
+
+  --primary-soft: rgb(222 183 255 / 0.14);
+  --primary-soft-foreground: #deb7ff;
+  --progress-track: rgb(255 255 255 / 0.1);
+
+  --chart-1: #deb7ff;
+  --chart-2: #3cc28f;
+  --chart-3: #a58fb8;
+  --chart-4: #8f5ebd;
+  --chart-5: #ff8a80;
+
+  --sidebar: #1a161d;
+  --sidebar-foreground: var(--on-surface);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: rgb(222 183 255 / 0.1);
+  --sidebar-accent-foreground: var(--on-surface);
+  --sidebar-border: rgb(255 255 255 / 0.08);
+  --sidebar-ring: var(--ring);
 }
 
 /* --------------------------------------------------------------------------
@@ -165,6 +251,13 @@
   --color-unsure-surface: var(--unsure-surface);
   --color-unsure-border: var(--unsure-border);
   --color-unsure-accent: var(--unsure-accent);
+  --color-complete-foreground: var(--complete-foreground);
+  --color-complete-surface: var(--complete-surface);
+  --color-complete-border: var(--complete-border);
+  --color-complete-accent: var(--complete-accent);
+  --color-primary-soft: var(--primary-soft);
+  --color-primary-soft-foreground: var(--primary-soft-foreground);
+  --color-progress-track: var(--progress-track);
 }
 
 /* --------------------------------------------------------------------------
