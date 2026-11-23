@@ -1,0 +1,8 @@
+# Store text files with LF line endings in the repo and working copy,
+# regardless of OS. Keeps diffs clean between Windows and Linux (Vercel).
+* text=auto eol=lf
+
+# Binary files — never touch line endings
+*.ico binary
+*.png binary
+*.jpg binary
